@@ -28,6 +28,7 @@ public class Warrior {
         if (damage < 0) {
             throw new IllegalArgumentException();
         }
+
         this.damage = damage;
     }
 
@@ -36,6 +37,10 @@ public class Warrior {
     }
 
     public void hit(Warrior opponent) {
-        opponent.setHealth(opponent.getHealth() - getDamage());
+        opponent.receiveDamage(getDamage(), this);
+    }
+
+    public void receiveDamage(int value, Warrior from) {
+        setHealth(getHealth() - value);
     }
 }
