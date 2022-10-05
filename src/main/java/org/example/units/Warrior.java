@@ -1,4 +1,4 @@
-package org.example;
+package org.example.units;
 
 public class Warrior {
     private final static int STANDARD_HEALTH = 50;

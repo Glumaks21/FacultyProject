@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.units.Warrior;
+
+import java.util.Iterator;
+
 public class Battle {
     public static boolean fight(Warrior attacker, Warrior defender) {
         while (attacker.isAlive() && defender.isAlive()) {
@@ -12,11 +16,11 @@ public class Battle {
     }
 
     public static boolean fight(Army attackers, Army defenders) {
-        while (!attackers.isEmpty() && !defenders.isEmpty()) {
-            Warrior attacker = attackers.peekUnit();
-            Warrior defender = defenders.peekUnit();
+        Iterator<Warrior> attackIterator = attackers.iterator();
+        Iterator<Warrior> defIterator = defenders.iterator();
 
-            if (fight(attacker, defender)) {
+        while (attackIterator.hasNext() && defIterator.hasNext()) {
+            if (fight(attackIterator.next(), defIterator.next())) {
                 defenders.removeUnit();
             } else {
                 attackers.removeUnit();

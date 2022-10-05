@@ -1,4 +1,4 @@
-package org.example;
+package org.example.units;
 
 public class Knight extends Warrior {
     private final static int STANDARD_DAMAGE = 12;
