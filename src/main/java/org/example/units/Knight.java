@@ -1,9 +1,13 @@
 package org.example.units;
 
 public class Knight extends Warrior {
-    private final static int STANDARD_DAMAGE = 12;
+    public final static int STANDARD_ATTACK = 12;
 
     public Knight() {
-        setDamage(STANDARD_DAMAGE);
+        super(STANDARD_HEALTH, STANDARD_ATTACK);
+    }
+
+    public Knight(int health, int attack) {
+        super(health, attack);
     }
 }

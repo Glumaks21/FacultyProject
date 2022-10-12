@@ -1,23 +1,18 @@
 package org.example.units;
 
 public class Defender extends Warrior {
-    private static final int STANDARD_HEALTH = 60;
-    private static final int STANDARD_ATTACK = 3;
-    private static final int STANDARD_BLOCK = 2;
+    public static final int STANDARD_HEALTH = 60;
+    public static final int STANDARD_ATTACK = 3;
+    public static final int STANDARD_BLOCK = 2;
 
     private int block;
 
     public Defender() {
-        setHealth(STANDARD_HEALTH);
-        setDamage(STANDARD_ATTACK);
-        setBlock(STANDARD_BLOCK);
+        this(STANDARD_HEALTH, STANDARD_ATTACK, STANDARD_BLOCK);
     }
 
-    public int getBlock() {
-        return block;
-    }
-
-    public void setBlock(int block) {
+    public Defender(int health, int attack, int block) {
+        super(health, attack);
         if (block < 0) {
             throw new IllegalArgumentException();
         }
@@ -25,8 +20,16 @@ public class Defender extends Warrior {
         this.block = block;
     }
 
+    public int getBlock() {
+        return block;
+    }
+
+    public void setBlock(int block) {
+        this.block = Math.max(0, block);
+    }
+
     @Override
     public void receiveDamage(int value, Warrior from) {
-        setHealth(getHealth() - Math.max(value - block, 0));
+        super.receiveDamage(value - getBlock(), from);
     }
 }

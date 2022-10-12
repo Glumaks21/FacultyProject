@@ -1,15 +1,23 @@
 package org.example.units;
 
 public class Warrior {
-    private final static int STANDARD_HEALTH = 50;
-    private final static int STANDARD_DAMAGE = 5;
+    public final static int STANDARD_HEALTH = 50;
+    public final static int STANDARD_ATTACK = 5;
 
     private int health;
-    private int damage;
+    private int attack;
 
     public Warrior() {
-        health = STANDARD_HEALTH;
-        damage = STANDARD_DAMAGE;
+        this(STANDARD_HEALTH, STANDARD_ATTACK);
+    }
+
+    public Warrior(int health, int attack) {
+        if (health < 0 || attack < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        this.health = health;
+        this.attack = attack;
     }
 
     public int getHealth() {
@@ -20,16 +28,18 @@ public class Warrior {
         this.health = Math.max(health, 0);
     }
 
-    public int getDamage() {
-        return damage;
+    public void heal(int health) {
+        if (health > 0) {
+            setHealth(Math.min(STANDARD_HEALTH, getHealth() + health));
+        }
     }
 
-    public void setDamage(int damage) {
-        if (damage < 0) {
-            throw new IllegalArgumentException();
-        }
+    public int getAttack() {
+        return attack;
+    }
 
-        this.damage = damage;
+    public void setAttack(int attack) {
+        this.attack = Math.max(attack, 0);
     }
 
     public boolean isAlive() {
@@ -37,10 +47,10 @@ public class Warrior {
     }
 
     public void hit(Warrior opponent) {
-        opponent.receiveDamage(getDamage(), this);
+        opponent.receiveDamage(getAttack(), this);
     }
 
     public void receiveDamage(int value, Warrior from) {
-        setHealth(getHealth() - value);
+        setHealth(Math.max(0, getHealth() - value));
     }
 }
