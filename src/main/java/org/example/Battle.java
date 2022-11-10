@@ -1,6 +1,7 @@
 package org.example;
 
-import org.example.units.Warrior;
+import org.example.unit.Warrior;
+import org.example.unit.SimpleWarrior;
 
 import java.util.Iterator;
 

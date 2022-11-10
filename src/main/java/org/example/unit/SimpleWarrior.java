@@ -1,17 +1,17 @@
-package org.example.units;
+package org.example.unit;
 
-public class Warrior {
+public class SimpleWarrior implements Warrior, CanHeal {
     public final static int STANDARD_HEALTH = 50;
     public final static int STANDARD_ATTACK = 5;
 
     private int health;
     private int attack;
 
-    public Warrior() {
+    public SimpleWarrior() {
         this(STANDARD_HEALTH, STANDARD_ATTACK);
     }
 
-    public Warrior(int health, int attack) {
+    public SimpleWarrior(int health, int attack) {
         if (health < 0 || attack < 0) {
             throw new IllegalArgumentException();
         }
@@ -20,37 +20,33 @@ public class Warrior {
         this.attack = attack;
     }
 
+    @Override
     public int getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    private void setHealth(int health) {
         this.health = Math.max(health, 0);
     }
 
+    @Override
     public void heal(int health) {
         if (health > 0) {
             setHealth(Math.min(STANDARD_HEALTH, getHealth() + health));
         }
     }
 
+    @Override
     public int getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    private void setAttack(int attack) {
         this.attack = Math.max(attack, 0);
     }
 
-    public boolean isAlive() {
-        return health > 0;
-    }
-
-    public void hit(Warrior opponent) {
-        opponent.receiveDamage(getAttack(), this);
-    }
-
-    public void receiveDamage(int value, Warrior from) {
-        setHealth(Math.max(0, getHealth() - value));
+    @Override
+    public void receiveDamage(CanAttack from, int damage) {
+        setHealth(Math.max(0, getHealth() - damage));
     }
 }

@@ -1,7 +1,8 @@
 package org.example;
 
 
-import org.example.units.Warrior;
+import org.example.unit.SimpleWarrior;
+import org.example.unit.Warrior;
 
 import java.util.*;
 import java.util.function.Supplier;
