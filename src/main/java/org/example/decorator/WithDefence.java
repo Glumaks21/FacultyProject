@@ -1,13 +1,13 @@
-package org.example.unit.bonus;
+package org.example.decorator;
 
-import org.example.unit.CanAttack;
-import org.example.unit.HasDefence;
-import org.example.unit.Warrior;
+import org.example.ability.CanAttack;
+import org.example.ability.HasDefence;
+import org.example.unit.Unit;
 
-public class WithDefence extends WarriorDecorator implements HasDefence {
+public class WithDefence extends UnitDecorator implements HasDefence {
     private final int defence;
 
-    public WithDefence(Warrior warrior, int defence) {
+    public WithDefence(Unit warrior, int defence) {
         super(warrior);
         if (defence < 0) {
             throw new IllegalArgumentException();
@@ -18,6 +18,11 @@ public class WithDefence extends WarriorDecorator implements HasDefence {
     @Override
     public int getDefence() {
         return defence;
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return super.getMaxHealth();
     }
 
     @Override

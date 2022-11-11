@@ -1,4 +1,4 @@
-package org.example.unit;
+package org.example.ability;
 
 public interface HasDefence extends CanReceiveDamage {
     int getDefence();

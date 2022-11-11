@@ -1,68 +1,78 @@
 package org.example;
 
 
-import org.example.unit.SimpleWarrior;
-import org.example.unit.Warrior;
+import org.example.decorator.WithNeighborUnits;
+import org.example.unit.Unit;
 
 import java.util.*;
 import java.util.function.Supplier;
 
 public class Army {
-    private final Queue<Warrior> units;
+    private final List<Unit> units;
 
     public Army() {
-        units = new LinkedList<>();
+        units = new ArrayList<>();
     }
 
     public boolean isEmpty() {
         return units.isEmpty();
     }
 
-    public Warrior removeUnit() {
-        return units.remove();
+    public Unit removeUnit() {
+        return units.remove(0);
     }
 
-    public Army addUnit(Warrior warrior) {
-        if (warrior == null) {
+    public Army addUnit(Unit unit) {
+        if (unit == null) {
             throw new IllegalArgumentException();
         }
 
-        units.add(warrior);
+        Unit unitInArmy;
+        if (!units.isEmpty()) {
+            Unit unitBefore = units.get(units.size() - 1);
+            unitInArmy = new WithNeighborUnits(unit, unitBefore, null);
+            WithNeighborUnits withNeighborUnits = (WithNeighborUnits) unitBefore;
+            withNeighborUnits.setAfter(unitInArmy);
+        } else {
+            unitInArmy = new WithNeighborUnits(unit, null, null);
+        }
+
+        units.add(unitInArmy);
         return this;
     }
 
-    public Army addUnits(Supplier<Warrior> type, int quantity) {
+    public Army addUnits(Supplier<Unit> type, int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException();
         }
 
         for (int i = 0; i < quantity; i++) {
-            units.add(type.get());
+            addUnit(type.get());
         }
         return this;
     }
 
-    public Iterator<Warrior> iterator() {
+    public Iterator<Unit> iterator() {
         return new FirstAliveIterator();
     }
 
-    private class FirstAliveIterator implements Iterator<Warrior> {
+    private class FirstAliveIterator implements Iterator<Unit> {
         @Override
         public boolean hasNext() {
-            while (units.peek() != null && !units.peek().isAlive()) {
-                units.remove();
+            while (!units.isEmpty() && !units.get(0).isAlive()) {
+                units.remove(0);
             }
 
             return !units.isEmpty();
         }
 
         @Override
-        public Warrior next() {
+        public Unit next() {
             if (units.isEmpty()) {
                 throw new NoSuchElementException();
             }
 
-            return units.peek();
+            return units.get(0);
         }
     }
 }

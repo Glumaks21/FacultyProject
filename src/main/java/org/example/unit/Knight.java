@@ -1,14 +1,14 @@
 package org.example.unit;
 
-public class Warrior extends AbstractUnit {
+public class Knight extends AbstractUnit {
     public final static int STANDARD_HEALTH = 50;
-    public final static int STANDARD_ATTACK = 5;
+    public final static int STANDARD_ATTACK = 7;
 
-    public Warrior() {
+    public Knight() {
         this(STANDARD_HEALTH, STANDARD_ATTACK);
     }
 
-    public Warrior(int health, int attack) {
+    public Knight(int health, int attack) {
         super(health, attack);
     }
 }
